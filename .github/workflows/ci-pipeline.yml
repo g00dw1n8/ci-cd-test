@@ -1,0 +1,29 @@
+name: CI Pipeline
+
+on: [push, pull_request]  # Запуск при каждом коммите или PR
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Запуск на сервере с Ubuntu
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Клонирует код репозитория
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'  # Версия Python
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Установка зависимостей
+
+      - name: Run tests
+        run: |
+          pytest --junitxml=report.xml  # Запуск PyTest с форматом отчёта
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: report.xml  # Загружаем отчёт тестов
