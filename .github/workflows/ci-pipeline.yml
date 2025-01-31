@@ -14,6 +14,9 @@ jobs:
         with:
           python-version: '3.10'  # Версия Python
 
+      - name: Debug working directory
+        run: pwd && ls -l  # Показывает текущую директорию и файлы
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt  # Установка зависимостей
